@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" id="mainHtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Central House | Luxury Redefined</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&family=Playfair+Display:wght@700&family=Poppins:wght@300;500;700&display=swap');
+        
+        :root { --gold: #d4af37; --dark-bg: #0f0f0f; }
+        body { font-family: 'Poppins', 'Cairo', sans-serif; background: #fff; color: #333; overflow-x: hidden; scroll-behavior: smooth; }
+
+        /* Navbar Styling */
+        #navbar { transition: all 0.4s ease; }
+        .nav-scrolled { background: rgba(0,0,0,0.9); padding: 15px 40px !important; backdrop-filter: blur(10px); }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
+                        url('https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2070');
+            background-size: cover; background-position: center; background-attachment: fixed;
+            height: 100vh; display: flex; align-items: center;
+        }
+
+        /* Buttons */
+        .btn-zoom {
+            background: var(--gold); color: white; padding: 16px 45px; border-radius: 4px;
+            font-weight: 700; text-transform: uppercase; letter-spacing: 2px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: inline-block; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            cursor: pointer;
+        }
+        .btn-zoom:hover { transform: scale(1.1); box-shadow: 0 15px 30px rgba(212, 175, 55, 0.4); background: #b8962e; }
+
+        /* Gallery & Lightbox */
+        .gallery-card { position: relative; overflow: hidden; border-radius: 8px; aspect-ratio: 16 / 10; cursor: pointer; }
+        .gallery-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s ease; }
+        .gallery-card:hover img { transform: scale(1.2); }
+        .gallery-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; opacity: 0; transition: 0.5s; }
+        .gallery-card:hover .gallery-overlay { opacity: 1; }
+
+        #lightbox {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 9999;
+            display: none; align-items: center; justify-content: center; padding: 20px;
+            backdrop-filter: blur(10px);
+        }
+        #lightbox img { max-width: 90%; max-height: 85vh; border: 2px solid var(--gold); box-shadow: 0 0 50px rgba(0,0,0,0.8); }
+        .close-lightbox { position: absolute; top: 20px; right: 30px; color: white; font-size: 40px; cursor: pointer; }
+
+        /* Features */
+        .features-section { background: var(--dark-bg); color: white; }
+        .feat-icon-box { width: 60px; height: 60px; border: 1px solid var(--gold); display: flex; align-items: center; justify-content: center; margin-bottom: 15px; transition: 0.5s; }
+        .feature-item:hover .feat-icon-box { background: var(--gold); transform: rotateY(180deg); }
+
+        /* Tours */
+        .tour-card { position: relative; height: 450px; overflow: hidden; border-radius: 12px; cursor: pointer; }
+        .tour-img { width: 100%; height: 100%; object-fit: cover; transition: 1.5s; }
+        .tour-card:hover .tour-img { transform: scale(1.15); }
+        .tour-info { position: absolute; bottom: 0; padding: 30px; background: linear-gradient(transparent, rgba(0,0,0,0.9)); width: 100%; color: white; }
+    </style>
+</head>
+<body>
+
+    <div id="lightbox" onclick="closeFullView()">
+        <span class="close-lightbox">&times;</span>
+        <img id="lightboxImg" src="" alt="Full View">
+    </div>
+
+    <nav class="fixed w-full z-50 p-8 flex justify-between items-center" id="navbar">
+        <div class="text-3xl font-bold text-white tracking-widest">CENTRAL<span class="text-[#d4af37]">HOUSE</span></div>
+        <div class="flex items-center gap-8">
+            <button onclick="toggleLanguage()" id="langBtn" class="text-white hover:text-[#d4af37] font-bold">AR</button>
+            <a href="https://wa.me/201091088968" class="btn-zoom text-xs py-3 px-6" id="navBook">Book Now</a>
+        </div>
+    </nav>
+
+    <section class="hero-section">
+        <div class="container mx-auto px-10">
+            <div class="max-w-4xl" data-aos="fade-right">
+                <h1 class="text-white text-6xl md:text-8xl font-bold mb-8 leading-none" id="heroTitle">THE ART OF <br><span class="text-[#d4af37]">LIVING.</span></h1>
+                <p class="text-white/70 text-xl mb-12 max-w-xl" id="heroDesc">Luxury is not a place, it’s an experience we’ve perfected in Cairo.</p>
+                <a href="#gallery" class="btn-zoom" id="btnExplore">View Gallery</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="features-section py-24 px-10">
+        <div class="container mx-auto text-center md:text-left">
+            <div class="mb-16" data-aos="fade-up">
+                <h2 class="text-[#d4af37] uppercase tracking-[5px] mb-4 font-bold" id="featSmall">Excellence</h2>
+                <h3 class="text-4xl md:text-5xl font-bold" id="featMain">What Makes Us Unique?</h3>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+                <div class="feature-item" data-aos="fade-up">
+                    <div class="feat-icon-box"><i class="fas fa-gem text-[#d4af37]"></i></div>
+                    <h4 class="text-xl font-bold mb-2 fh">Royal Quality</h4>
+                    <p class="text-white/50 text-sm fp">Handpicked details for a premium hotel experience.</p>
+                </div>
+                <div class="feature-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feat-icon-box"><i class="fas fa-shield-alt text-[#d4af37]"></i></div>
+                    <h4 class="text-xl font-bold mb-2 fh">High Privacy</h4>
+                    <p class="text-white/50 text-sm fp">Total security and discretion for our guests.</p>
+                </div>
+                <div class="feature-item" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feat-icon-box"><i class="fas fa-map-marker-alt text-[#d4af37]"></i></div>
+                    <h4 class="text-xl font-bold mb-2 fh">Prime Location</h4>
+                    <p class="text-white/50 text-sm fp">In the very heart of Cairo district.</p>
+                </div>
+                <div class="feature-item" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feat-icon-box"><i class="fas fa-headset text-[#d4af37]"></i></div>
+                    <h4 class="text-xl font-bold mb-2 fh">24/7 Support</h4>
+                    <p class="text-white/50 text-sm fp">Dedicated professional team at your service.</p>
+                </div>
+                <div class="feature-item" data-aos="fade-up">
+                    <div class="feat-icon-box"><i class="fas fa-wifi text-[#d4af37]"></i></div>
+                    <h4 class="text-xl font-bold mb-2 fh">Fast Internet</h4>
+                    <p class="text-white/50 text-sm fp">High-speed connectivity in every room.</p>
+                </div>
+                <div class="feature-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feat-icon-box"><i class="fas fa-broom text-[#d4af37]"></i></div>
+                    <h4 class="text-xl font-bold mb-2 fh">Daily Cleaning</h4>
+                    <p class="text-white/50 text-sm fp">Professional housekeeping services daily.</p>
+                </div>
+                <div class="feature-item" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feat-icon-box"><i class="fas fa-utensils text-[#d4af37]"></i></div>
+                    <h4 class="text-xl font-bold mb-2 fh">Fine Dining</h4>
+                    <p class="text-white/50 text-sm fp">Exceptional culinary choices for our visitors.</p>
+                </div>
+                <div class="feature-item" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feat-icon-box"><i class="fas fa-car text-[#d4af37]"></i></div>
+                    <h4 class="text-xl font-bold mb-2 fh">Valet Parking</h4>
+                    <p class="text-white/50 text-sm fp">Safe and secure parking for your vehicle.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tours" class="py-24 bg-gray-50 px-10">
+        <div class="container mx-auto">
+            <h2 class="text-4xl font-bold mb-16 text-center tracking-tight" id="tourTitle">EXCLUSIVE TOURS</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="tour-card shadow-lg" data-aos="zoom-in" onclick="openFullView('https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?q=80&w=1000')">
+                    <img src="https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?q=80&w=1000" class="tour-img">
+                    <div class="tour-info">
+                        <h4 class="text-2xl font-bold th">The Pyramids</h4>
+                        <p class="text-sm opacity-80 tp">VIP tour to the Giza Plateau.</p>
+                    </div>
+                </div>
+                <div class="tour-card shadow-lg" data-aos="zoom-in" data-aos-delay="200" onclick="openFullView('https://images.unsplash.com/photo-1553913861-c0fddf2619ee?q=80&w=1000')">
+                    <img src="https://images.unsplash.com/photo-1553913861-c0fddf2619ee?q=80&w=1000" class="tour-img">
+                    <div class="tour-info">
+                        <h4 class="text-2xl font-bold th">Historic Cairo</h4>
+                        <p class="text-sm opacity-80 tp">Exploring Al-Muizz & Khan El-Khalili.</p>
+                    </div>
+                </div>
+                <div class="tour-card shadow-lg" data-aos="zoom-in" data-aos-delay="400" onclick="openFullView('https://images.unsplash.com/photo-1506461883276-594a12b11cf3?q=80&w=1000')">
+                    <img src="https://images.unsplash.com/photo-1506461883276-594a12b11cf3?q=80&w=1000" class="tour-img">
+                    <div class="tour-info">
+                        <h4 class="text-2xl font-bold th">Nile Magic</h4>
+                        <p class="text-sm opacity-80 tp">Private luxury sunset felucca.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery" class="py-24 bg-white px-10">
+        <div class="container mx-auto text-center">
+            <h2 class="text-4xl font-bold mb-16 tracking-tighter" id="galTitle">THE 25 COLLECTION</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="imageGrid"></div>
+        </div>
+    </section>
+
+    <footer class="bg-black py-16 text-center border-t border-white/10">
+        <p class="text-white/30 tracking-widest text-xs uppercase">© 2026 The Central House - Excellence In Hospitality</p>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800, once: true });
+
+        // Gallery Generation
+        const grid = document.getElementById('imageGrid');
+        for (let i = 1; i <= 25; i++) {
+            grid.innerHTML += `
+                <div class="gallery-card shadow-md" data-aos="zoom-in" onclick="openFullView('${i}.jpeg')">
+                    <img src="${i}.jpeg" alt="Suite ${i}" onerror="this.src='https://via.placeholder.com/800x500?text=Suite+${i}'">
+                    <div class="gallery-overlay">
+                        <span class="text-white border border-white px-6 py-2 uppercase text-xs tracking-widest">Full View</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Lightbox Functions
+        function openFullView(src) {
+            const lb = document.getElementById('lightbox');
+            document.getElementById('lightboxImg').src = src;
+            lb.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        function closeFullView() {
+            document.getElementById('lightbox').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Language Switch System
+        let isAr = false;
+        function toggleLanguage() {
+            isAr = !isAr;
+            const d = {
+                en: {
+                    btn: "AR", book: "Book Now", h1: "THE ART OF <br><span class='text-[#d4af37]'>LIVING.</span>",
+                    desc: "Luxury is not a place, it’s an experience we’ve perfected in Cairo.",
+                    exp: "View Gallery", small: "Excellence", main: "What Makes Us Unique?",
+                    gal: "THE 25 COLLECTION", tour: "EXCLUSIVE TOURS",
+                    th: ["The Pyramids", "Historic Cairo", "Nile Magic"],
+                    tp: ["VIP tour to the Giza Plateau.", "Exploring Al-Muizz & Khan El-Khalili.", "Private luxury sunset felucca."],
+                    fh: ["Royal Quality", "High Privacy", "Prime Location", "24/7 Support", "Fast Internet", "Daily Cleaning", "Fine Dining", "Valet Parking"],
+                    fp: ["Premium hotel experience.", "Total security and discretion.", "In the heart of New Cairo.", "Dedicated professional team.", "High-speed Wi-Fi access.", "Daily housekeeping service.", "Exceptional culinary choices.", "Safe parking for guests."]
+                },
+                ar: {
+                    btn: "EN", book: "احجز الآن", h1: "فن <br><span class='text-[#d4af37]'>الحياة.</span>",
+                    desc: "الفخامة ليست مجرد مكان، بل هي تجربة أتقناها من أجلك في القاهرة.",
+                    exp: "مشاهدة الصور", small: "التميز", main: "ما الذي يميزنا؟",
+                    gal: "مجموعة الـ 25", tour: "رحلات حصرية",
+                    th: ["الأهرامات العظيمة", "القاهرة التاريخية", "سحر النيل"],
+                    tp: ["جولة VIP خاصة بهضبة الجيزة.", "استكشاف شارع المعز وخان الخليلي.", "فلوكة ملكية خاصة وقت الغروب."],
+                    fh: ["جودة ملكية", "خصوصية عالية", "موقع متميز", "دعم 24/7", "إنترنت سريع", "نظافة يومية", "مطعم راقي", "خدمة ركن السيارات"],
+                    fp: ["تجربة فندقية فاخرة ومميزة.", "خصوصية تامة وأمان لضيوفنا.", "في قلب منطقة وسط البلد.", "فريق عمل محترف لخدمتكم.", "إنترنت فائق السرعة بالغرف.", "خدمة تنظيف يومية احترافية.", "خيارات طعام استثنائية.", "مواقف سيارات آمنة ومنظمة."]
+                }
+            };
+            
+            const curr = isAr ? d.ar : d.en;
+            document.getElementById('langBtn').innerText = curr.btn;
+            document.getElementById('navBook').innerText = curr.book;
+            document.getElementById('heroTitle').innerHTML = curr.h1;
+            document.getElementById('heroDesc').innerText = curr.desc;
+            document.getElementById('btnExplore').innerText = curr.exp;
+            document.getElementById('featSmall').innerText = curr.small;
+            document.getElementById('featMain').innerText = curr.main;
+            document.getElementById('galTitle').innerText = curr.gal;
+            document.getElementById('tourTitle').innerText = curr.tour;
+            
+            document.querySelectorAll('.fh').forEach((el, i) => el.innerText = curr.fh[i]);
+            document.querySelectorAll('.fp').forEach((el, i) => el.innerText = curr.fp[i]);
+            document.querySelectorAll('.th').forEach((el, i) => el.innerText = curr.th[i]);
+            document.querySelectorAll('.tp').forEach((el, i) => el.innerText = curr.tp[i]);
+            
+            document.getElementById('mainHtml').setAttribute('dir', isAr ? 'rtl' : 'ltr');
+        }
+
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) nav.classList.add('nav-scrolled');
+            else nav.classList.remove('nav-scrolled');
+        });
+    </script>
+</body>
+</html>
